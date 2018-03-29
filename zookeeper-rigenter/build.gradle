@@ -1,0 +1,45 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+
+ext {
+	springCloudVersion = 'Finchley.M9'
+}
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-config-server')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	// https://mvnrepository.com/artifact/com.101tec/zkclient
+	compile group: 'com.101tec', name: 'zkclient', version: '0.10'
+	//log4j
+	compile "log4j:log4j:1.2.17"
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
